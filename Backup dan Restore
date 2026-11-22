@@ -1,0 +1,26 @@
+Tahap 1: Persiapan Server & Pengecekan Database AwalMenjalankan XAMPP: Mengaktifkan modul Apache dan MySQL di XAMPP Control Panel hingga berstatus running.   
+Mengecek Tabel & Jumlah Data Awal: Masuk ke phpMyAdmin pada database utama db_dwi_indarti_wardani, lalu memeriksa daftar tabel serta jumlah baris data pada tabel mahasiswa (25 data), dosen (15 data), dan mata_kuliah (19 data) sebelum dilakukan backup:   
+SHOW TABLES;
+
+SELECT COUNT(*) AS jumlah_mahasiswa FROM mahasiswa;
+SELECT COUNT(*) AS jumlah_dosen FROM dosen;
+SELECT COUNT(*) AS jumlah_matakuliah FROM mata_kuliah;
+
+Tahap 2: Backup & Restore Database (Export & Import)
+1.Melakukan Backup (Export):
+Membuka tab Export pada database db_dwi_indarti_wardani.   
+Memilih metode Custom, format SQL, mencentang opsi Structure dan Data untuk seluruh tabel, serta menyimpan hasil ekspor ke file bernama backup_siakad_010.sql.   
+Memeriksa isi file backup_siakad_010.sql menggunakan Notepad untuk memastikan perintah CREATE TABLE dan INSERT INTO sudah terekam dengan lengkap.   
+
+2.Membuat Database Baru untuk Tujuan Restore:
+CREATE DATABASE db_dwi_indarti_wardani_coba;
+
+1.Melakukan Restore (Import):
+Membuka tab Import pada database db_dwi_indarti_wardani_coba, memilih file backup_siakad_010.sql, dan mengeksekusinya hingga 40 query berhasil dijalankan.   
+
+2.Verifikasi Hasil Restore: Memastikan seluruh tabel dan jumlah data di database hasil restore (db_dwi_indarti_wardani_coba) sama persis dengan database aslinya (25 mahasiswa, 15 dosen, 19 mata kuliah):   
+SHOW TABLES;
+
+SELECT COUNT(*) AS jumlah_mahasiswa FROM mahasiswa;
+SELECT COUNT(*) AS jumlah_dosen FROM dosen;
+SELECT COUNT(*) AS jumlah_matakuliah FROM mata_kuliah;
