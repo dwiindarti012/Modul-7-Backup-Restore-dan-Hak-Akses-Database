@@ -1,0 +1,32 @@
+Tahap 3: Manajemen Pengguna & Pemberian Hak Akses (CREATE USER & GRANT)
+1.Membuat User Baru (baca_kampus): Membuat akun pengguna baru pada localhost dengan kata sandi khusus:   
+CREATE USER 'baca_kampus'@'localhost'
+IDENTIFIED BY 'Kampuscoba_2026!';
+
+2.Memberikan Hak Akses (GRANT SELECT): Memberikan hak akses hanya untuk membaca data (SELECT) pada seluruh tabel di database db_dwi_indarti_wardani_coba:   
+GRANT SELECT
+ON db_dwi_indarti_wardani_coba.*
+TO 'baca_kampus'@'localhost';
+
+3.Mengecek Status Hak Akses (SHOW GRANTS):   
+SHOW GRANTS FOR 'baca_kampus'@'localhost';
+
+Tahap 4: Pengujian Hak Akses Pengguna (baca_kampus)
+1.Login sebagai baca_kampus: Keluar dari akun root dan masuk kembali ke phpMyAdmin menggunakan kredensial baca_kampus. Database yang terlihat di panel kiri hanya db_dwi_indarti_wardani_coba.   
+
+2.Uji Hak Akses Baca (SELECT — Berhasil): Menjalankan perintah menampilkan data mahasiswa dan berhasil tampil seluruh 25 barisnya:   
+SELECT * FROM mahasiswa;
+
+3.Uji Hak Akses Tambah Data (INSERT — Ditolak): Mencoba menambahkan data baru ke tabel program_studi. MySQL menolak perintah ini dengan pesan Error #1142 - INSERT command denied karena pengguna hanya memiliki hak akses SELECT:   
+INSERT INTO program_studi (kode_prodi, nama_prodi, fakultas)
+VALUES ('P05', 'Prodi Uji Coba', 'Saintek');
+
+Tahap 5: Pencabutan Hak Akses (REVOKE)
+1.Login Kembali sebagai root: Masuk kembali menggunakan akun administrator (root).   
+
+2.Mencabut Hak Akses (REVOKE SELECT): Menghapus hak akses baca (SELECT) milik baca_kampus dari database db_dwi_indarti_wardani_coba, lalu memverifikasinya kembali:   
+REVOKE SELECT
+ON db_dwi_indarti_wardani_coba.*
+FROM 'baca_kampus'@'localhost';
+
+SHOW GRANTS FOR 'baca_kampus'@'localhost';
